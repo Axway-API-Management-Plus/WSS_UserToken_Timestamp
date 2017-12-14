@@ -7,7 +7,13 @@ This policy provides an example WS Security policy for User Token and Timestamp 
 
 The basic policy flow is as follows:
 
-***To be updated***
+- ***Extract WSS Header Block***: This filter, renamed "Check WSS Header is present and extract", ensures the WS Header block is present and places it into an attribute for use with the other filters.
+- ***Extract WSS Username Token***: This filter, renamed "Check WSS Username Token is present and extract", takes the WSS Header block, ensures a username token block is present, and places it into an attribute for use with the other filters.
+- ***WS-Security Username Token***: This filter, renamed "Validate WS-Security Username Token", provides configurable authentication and validation of the extracted  WS username token.
+- ***Extract WSS Timestamp***: This filter, renamed "Check WSS Timestamp is present and extract", checks the WSS header block for timestamps and extracts them for use with other filters.
+- ***Validate Timestamp***: This filter, renamed "Validate Created/Expiry Timestamp", allows you to enforce a format for a timestamp and its validity relative to a selected time zone.
+
+![alt text](https://github.com/Axway-API-Management-Plus/WSS_UserToken_Timestamp/blob/master/example/src/WSSec-Policy.png "WS Sec Policy")
 
 Once updated to fit your environment, this policy can be used in several ways:
 - As a standalone service that can be called as part of web service processing.
