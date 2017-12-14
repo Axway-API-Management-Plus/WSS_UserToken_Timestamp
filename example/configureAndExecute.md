@@ -26,23 +26,33 @@ To follow this example you will need the following:
 <web:CountryName>United States</web:CountryName>
 ```
 
-Confirm you are able to get a response from the remote service.
+Confirm you are able to get a response from the remote service similar to the one shown:
+
+![alt text](https://github.com/Axway-API-Management-Plus/WSS_UserToken_Timestamp/blob/master/example/src/sampleResponse.png "Sample Response")
 
 5. In Policy Studio, navigate to "APIs --> Web Service Repository --> Web Services". Right click on this folder and choose to "Register Web Service". Follow the prompts, select both sets of operations, and default configuration. The result should be a new web service that shows up as "Global Weather" under the Web Services repository, as well as a new "GlobalWeather" policy under "Generated Policies --> Web Services.GlobalWeather". Deploy.
 
 6. Navigate to the new GlobalWeather policy. Confirm that it includes the default relative path '/globalweather.asmx'. Return to SoapUI and create a new request for the GlobalWeatherSoap12 GetCitiesByCountry operation and update the request with the country name. Modify the URL to point at you API Gateway. Assuming you are using the default HTTP services, ports, and the default endpoint, your new URL might look like this: http://apihost:8080/globalweather.asmx. Run through a request against the end API Gateway endpoint. This should provide a response similar to the direct web service test in step four.
 
-7. Right click on the top level of your SoapUI project and select "Show Project View --> WS Security Configurations --> Outgoing WS Security". Here you will be creating a new WS Security Outgoing Profile with a username and timestamp set up. To keep this testing simple, any test username and password will do as we do not authenticate it against a repository in the sample policy. Based on my testing, in order to use the updated profile you now need to save the project, close SoapUI, restart it and navigate back to the project. Open the request, go to the auth tab, create basic auth policy. Add sample user/pass and on outgoing WSS choose your created option.
+7. Right click on the top level of your SoapUI project and select "Show Project View --> WS Security Configurations --> Outgoing WS Security". Here you will be creating a new WS Security Outgoing Profile with a username and timestamp set up. To keep this testing simple, any test username and password will do as we do not authenticate it against a repository in the sample policy. Complete the setup as shown below: 
 
-![alt text](https://github.com/Axway-API-Management-Plus/Positive-Field-Validation/blob/master/example/src/attributeCapture.png "Attribute Capture")
+![alt text](https://github.com/Axway-API-Management-Plus/WSS_UserToken_Timestamp/blob/master/example/src/soapUIUsernameSetup.png "User Token Setup")
+
+![alt text](https://github.com/Axway-API-Management-Plus/WSS_UserToken_Timestamp/blob/master/example/src/soapUITimestampSetup.png "Time Stamp Setup")
+
+![alt text](https://github.com/Axway-API-Management-Plus/WSS_UserToken_Timestamp/blob/master/example/src/soapUIRequestSetup.png "Outbound Request Setup")
+
+Based on my testing, in order to use the updated outbound WSS profile to show up you now need to save the project, close SoapUI, restart it and navigate back to the project. 
 
 8. Return to Policy Studio. Double click the Service Handler Filter and choose "Message Intercept Points --> Request from Client --> and click the three dots next to option A) Execute Before Operation". Choose the  WSS_UserToken_Timestamp policy you imported earlier. Deploy the changes.
 
-![alt text](https://github.com/Axway-API-Management-Plus/Positive-Field-Validation/blob/master/example/src/attributeCapture.png "Attribute Capture")
+![alt text](https://github.com/Axway-API-Management-Plus/WSS_UserToken_Timestamp/blob/master/example/src/serviceHandlerConfig.png "Service Handler Setup")
 
 9. With the new SoapUI WSS Outgoing profile active, send the request against the API Gateway endpoint and confirm it passes.
 
 10. Log into your API Gateway Management web console (eg https://hostmane:8090), and access the Traffic Monitor. Review the message execution.
+
+![alt text](https://github.com/Axway-API-Management-Plus/WSS_UserToken_Timestamp/blob/master/example/src/TrafficMonitorOutput.png "Traffic Monitor Output")
 
 
 ## Next Steps
